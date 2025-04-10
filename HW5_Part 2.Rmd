@@ -1,0 +1,52 @@
+---
+title: "HW5 - Data Visualization"
+author: "Bharathi K"
+date: "2025-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 2
+
+```{r California}
+#Load the libraries
+library(ggplot2)
+library(dplyr)
+library(mapdata)
+
+#Load US State map
+states = map_data("state")
+california = states %>% filter(region == "california")
+
+```
+```{r load the dataset}
+
+load("C:/Users/Bharathi/OneDrive/Documents/Data Visualisation/wind_turbines.rda")
+
+wind_ca = wind_turbines %>%
+  filter(t_state == "CA")
+
+```
+
+## (c) & (d) visualize state of california
+
+```{r visualise state , echo=FALSE}
+
+ggplot() + 
+  geom_polygon(data = california,
+               aes(x = long, y= lat, group = group),
+               fill = "#0072B2", color = "black") +
+  geom_point(data =wind_ca,
+             aes(x = xlong, y = ylat),
+             color = "orange", size = 0.9, alpha = 0.7) +
+  coord_fixed(1.3) +
+  guides(fill = "none") +
+  labs(title = "Wind Turbines in California",
+       x = "Longitude", y = "Latitude")
+
+```
+
+
